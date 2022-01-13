@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TodoListItem from "./TodoListItem";
 
 const initialTodos: Array<Todo> = [
@@ -8,28 +8,33 @@ const initialTodos: Array<Todo> = [
 ];
 
 const App: React.FC = () => {
+  const [filteredTodo, setFilteredTodo] = useState([]);
   const [todos, setTodos] = useState(initialTodos);
   const toggleTodo: ToggleTodo = (selectedTodo) => {
-    const newTodos = todos.map((todo) => {
-      if (todo === selectedTodo) {
-        return {
-          ...todo,
-          complete: !todo.complete,
-        };
-      } else return todo;
+    const filteredTodo: Array<Todo> = todos.map((el) => {
+      if (el.id === selectedTodo.id) {
+        console.log("클릭한거", el);
+        return { ...el, complete: !selectedTodo.complete };
+      } else {
+        console.log("클릭안한거", el);
+        return el;
+      }
     });
-    setTodos(newTodos);
   };
+
   return (
     <>
-      {/* <TodoListItem todo={todos[0]} /> */}
-      {todos.map((todo) => {
-        return (
-          <React.Fragment key={todo.id}>
-            <TodoListItem todo={todo} toggleTodo={toggleTodo} />
-          </React.Fragment>
-        );
-      })}
+      <ul>
+        <React.Fragment>
+          {todos.map((todo) => {
+            return (
+              <React.Fragment key={todo.id}>
+                <TodoListItem todo={todo} toggleTodo={toggleTodo} />
+              </React.Fragment>
+            );
+          })}
+        </React.Fragment>
+      </ul>
     </>
   );
 };
