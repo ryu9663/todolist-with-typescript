@@ -1,6 +1,15 @@
 # 타입스크립트로 TodoList 만들기
 
+- 추가 예정인 기능
+  - 완료한 항목은 밑으로 떨어지기,
+  - 항목 삭제
 
 
-https://user-images.githubusercontent.com/66232436/148902068-625f97d9-b3fc-40e1-8e16-959b8b963112.mov
+- 구현된 기능
+  - checkbox로 완료한 기능 표시
+  - 할 일 추가
+
+![화면 기록 2022-01-31 오전 3 55 59](https://user-images.githubusercontent.com/66232436/151713463-fc3e6b1e-b887-46f7-8980-2fc2e086ed38.gif)
+
+
 
