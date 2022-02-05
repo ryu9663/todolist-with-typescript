@@ -7,7 +7,6 @@ type Props = {
 };
 
 const CompletedTodoList: React.FC<Props> = ({ completedTodo, toggleTodo }) => {
-  console.log(completedTodo);
   return (
     <div>
       <h2>완료된 계획들</h2>

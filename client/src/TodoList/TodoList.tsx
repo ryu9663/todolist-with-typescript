@@ -5,6 +5,8 @@ import SureToRemoveModal from "./Modal/SureToRemoveModal";
 import RemoveTodoBtn from "./Components/RemoveTodoBtn";
 import AddNewTodo from "./Components/AddNewTodo";
 import CompletedTodoList from "./Components/CompletedTodoList";
+import EditTodoBtn from "./Components/EditTodoBtn";
+import EditTodoModal from "./Modal/EditTodoModal";
 export type Todo = {
   id: number;
   text: string;
@@ -40,8 +42,11 @@ function TodoList() {
   const [todos, setTodos] = useState(initialTodos);
   const [completedTodos, setCompletedTodos] = useState<never[] | Todo[]>(initialTodos.filter((el) => el.complete));
   const [removeTodoId, setRemoveTodoId] = useState<number>(0);
-  const [modalHandler, setModalHandler] = useState<boolean>(false);
+  const [editTodoId, setEditTodoId] = useState<number>(0);
+  const [removeModalHandler, setRemoveModalHandler] = useState<boolean>(false);
+  const [editModalHandler, setEditModalHandler] = useState<boolean>(false);
   const [newTodo, setNewTodo] = useState<string>("");
+  const [editTodo, setEditTodo] = useState<string>("");
   const toggleTodo: ToggleTodo = (selectedTodo) => {
     console.log(todos);
     if (!selectedTodo.complete) {
@@ -72,21 +77,41 @@ function TodoList() {
       complete: false,
     };
     setTodos([...todos, newTodoList]);
-    setModalHandler(false);
+    // setModalHandler(false);
   };
-  const removeTodo = (todoId: number) => {
+  const removeTodoFunc = (todoId: number) => {
     const filteredTodos = todos.filter((el) => el.id !== todoId);
     setTodos(filteredTodos);
-    setModalHandler(false);
+    setRemoveModalHandler(false);
+  };
+  const editTodoFunc = (todoId: number) => {
+    const editedTodos = todos.map((el, idx) => {
+      if (idx === todoId) {
+        const editedTodo = { ...el, ...{ text: editTodo } };
+        return editedTodo;
+      } else return el;
+    });
+    setTodos(editedTodos);
+    setEditTodo("");
+    setEditModalHandler(false);
   };
 
   return (
     <>
-      {modalHandler ? (
+      {removeModalHandler ? (
         <SureToRemoveModal
           todoId={removeTodoId}
-          onClick={() => setModalHandler(false)}
-          removeTodoHandler={removeTodo}
+          onClick={() => setRemoveModalHandler(false)}
+          removeTodoHandler={removeTodoFunc}
+        />
+      ) : null}
+      {editModalHandler ? (
+        <EditTodoModal
+          todoId={editTodoId}
+          onClick={() => setEditModalHandler(false)}
+          editTodoHandler={editTodoFunc}
+          editTodo={editTodo}
+          setEditTodo={setEditTodo}
         />
       ) : null}
       <EntireContainor>
@@ -99,12 +124,17 @@ function TodoList() {
                 return (
                   <TodoListLi key={`${todo.id}+${todo.text[1]}`}>
                     <TodoListItem todo={todo} toggleTodo={toggleTodo} />
+                    <EditTodoBtn
+                      onClick={() => {
+                        setEditTodoId(todo.id);
+                        setEditModalHandler(true);
+                      }}
+                    />
                     <RemoveTodoBtn
                       onClick={() => {
                         setRemoveTodoId(todo.id);
-                        setModalHandler(true);
+                        setRemoveModalHandler(true);
                       }}
-                      todoId={todo.id}
                     />
                   </TodoListLi>
                 );

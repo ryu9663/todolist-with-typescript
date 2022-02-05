@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Todo } from "../TodoList";
 
 type Props = {
   onClick: () => void;
@@ -13,12 +12,12 @@ const Btn = styled.button`
   border: none;
 `;
 
-const RemoveTodoBtn: React.FC<Props> = ({ onClick }) => {
+const EditTodoBtn: React.FC<Props> = ({ onClick }) => {
   return (
     <div>
-      <Btn onClick={onClick}>삭제</Btn>
+      <Btn onClick={onClick}>수정</Btn>
     </div>
   );
 };
 
-export default RemoveTodoBtn;
+export default EditTodoBtn;
