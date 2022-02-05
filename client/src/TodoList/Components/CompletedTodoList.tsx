@@ -13,7 +13,7 @@ const CompletedTodoList: React.FC<Props> = ({ completedTodo, toggleTodo }) => {
       <h2>완료된 계획들</h2>
       {completedTodo.map((el) => {
         return (
-          <label className={el.complete ? "complete" : ""}>
+          <label key={`${el.id}+${el.text[1]}`} className={el.complete ? "complete" : ""}>
             <input type="checkbox" checked={el.complete} onChange={() => toggleTodo(el)} />
             {el.text}
           </label>

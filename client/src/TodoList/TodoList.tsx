@@ -38,15 +38,16 @@ const TodoListLi = styled.li`
 `;
 function TodoList() {
   const [todos, setTodos] = useState(initialTodos);
-  const [completedTodos, setCompletedTodos] = useState<never[] | Todo[]>([]);
+  const [completedTodos, setCompletedTodos] = useState<never[] | Todo[]>(initialTodos.filter((el) => el.complete));
   const [removeTodoId, setRemoveTodoId] = useState<number>(0);
   const [modalHandler, setModalHandler] = useState<boolean>(false);
   const [newTodo, setNewTodo] = useState<string>("");
   const toggleTodo: ToggleTodo = (selectedTodo) => {
+    console.log(todos);
     if (!selectedTodo.complete) {
       // set
       console.log("완료");
-      setCompletedTodos([...completedTodos, selectedTodo]);
+      setCompletedTodos([...completedTodos, { ...selectedTodo, ...{ complete: !selectedTodo.complete } }]);
     } else {
       console.log("미완료");
       const filteredTodo: Todo[] = completedTodos.filter((el) => {
@@ -54,6 +55,7 @@ function TodoList() {
       });
       setCompletedTodos(filteredTodo);
     }
+
     const filteredTodo: Todo[] = todos.map((el) => {
       if (el.text === selectedTodo.text) {
         return { ...el, complete: !selectedTodo.complete };
@@ -61,7 +63,7 @@ function TodoList() {
         return el;
       }
     });
-    setTodos(filteredTodo);
+    setTodos(filteredTodo); //체크 유무
   };
   const addNewTodo = (newTodo: string) => {
     const newTodoList = {
@@ -91,22 +93,24 @@ function TodoList() {
         <React.Fragment>
           <AddNewTodo addNewTodo={addNewTodo} setNewTodo={setNewTodo} newTodo={newTodo} />
           <TodoWrapper>
-            {todos.map((todo) => {
-              return (
-                <TodoListLi key={`${todo.id}+${todo.text[1]}`}>
-                  <TodoListItem todo={todo} toggleTodo={toggleTodo} />
-                  <RemoveTodoBtn
-                    onClick={() => {
-                      setRemoveTodoId(todo.id);
-                      setModalHandler(true);
-                    }}
-                    todoId={todo.id}
-                  />
-                </TodoListLi>
-              );
-            })}
+            {todos
+              .filter((el) => !el.complete)
+              .map((todo) => {
+                return (
+                  <TodoListLi key={`${todo.id}+${todo.text[1]}`}>
+                    <TodoListItem todo={todo} toggleTodo={toggleTodo} />
+                    <RemoveTodoBtn
+                      onClick={() => {
+                        setRemoveTodoId(todo.id);
+                        setModalHandler(true);
+                      }}
+                      todoId={todo.id}
+                    />
+                  </TodoListLi>
+                );
+              })}
           </TodoWrapper>
-          {/* <CompletedTodoList /> */}
+          <CompletedTodoList completedTodo={completedTodos} toggleTodo={toggleTodo} />
         </React.Fragment>
       </EntireContainor>
     </>
