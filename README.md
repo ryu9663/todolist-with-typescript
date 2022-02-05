@@ -6,12 +6,14 @@
 
 
 - 구현된 기능
+  - 수정하기 
+  - 완료한 항목은 밑으로 떨어지기
   - checkbox로 완료한 기능 표시
   - 할 일 추가
   - 항목 삭제
 
+![화면 기록 2022-02-06 오전 1 24 41](https://user-images.githubusercontent.com/66232436/152650007-45b6ab47-2730-42cd-88c6-6b2922d1bd7b.gif)
 
-![화면 기록 2022-02-02 오전 12 43 35](https://user-images.githubusercontent.com/66232436/152000966-7eb68301-1938-42ed-a751-0f13e9ddf6da.gif)
 
 
 
