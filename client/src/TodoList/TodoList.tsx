@@ -41,8 +41,8 @@ const TodoListLi = styled.li`
 function TodoList() {
   const [todos, setTodos] = useState(initialTodos);
   const [completedTodos, setCompletedTodos] = useState<never[] | Todo[]>(initialTodos.filter((el) => el.complete));
-  const [removeTodoId, setRemoveTodoId] = useState<number>(0);
-  const [editTodoId, setEditTodoId] = useState<number>(0);
+  const [removeTodoId, setRemoveTodoId] = useState<string>("");
+  const [editTodoId, setEditTodoId] = useState<string>("");
   const [removeModalHandler, setRemoveModalHandler] = useState<boolean>(false);
   const [editModalHandler, setEditModalHandler] = useState<boolean>(false);
   const [newTodo, setNewTodo] = useState<string>("");
@@ -79,14 +79,15 @@ function TodoList() {
     setTodos([...todos, newTodoList]);
     // setModalHandler(false);
   };
-  const removeTodoFunc = (todoId: number) => {
-    const filteredTodos = todos.filter((el) => el.id !== todoId);
+  const removeTodoFunc = (todoId: string) => {
+    console.log("지울꺼", todoId);
+    const filteredTodos = todos.filter((el) => el.text !== todoId);
     setTodos(filteredTodos);
     setRemoveModalHandler(false);
   };
-  const editTodoFunc = (todoId: number) => {
+  const editTodoFunc = (todoId: string) => {
     const editedTodos = todos.map((el, idx) => {
-      if (idx === todoId) {
+      if (el.text === todoId) {
         const editedTodo = { ...el, ...{ text: editTodo } };
         return editedTodo;
       } else return el;
@@ -126,13 +127,13 @@ function TodoList() {
                     <TodoListItem todo={todo} toggleTodo={toggleTodo} />
                     <EditTodoBtn
                       onClick={() => {
-                        setEditTodoId(todo.id);
+                        setEditTodoId(todo.text);
                         setEditModalHandler(true);
                       }}
                     />
                     <RemoveTodoBtn
                       onClick={() => {
-                        setRemoveTodoId(todo.id);
+                        setRemoveTodoId(todo.text);
                         setRemoveModalHandler(true);
                       }}
                     />

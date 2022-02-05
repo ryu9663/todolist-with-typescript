@@ -61,8 +61,8 @@ const ModalView = styled.div`
 `;
 export type Props = {
   onClick: () => void;
-  todoId: number;
-  editTodoHandler: (todoId: number) => void;
+  todoId: string;
+  editTodoHandler: (todoId: string) => void;
   editTodo: string;
   setEditTodo: (editTodo: string) => void;
 };

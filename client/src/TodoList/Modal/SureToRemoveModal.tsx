@@ -56,8 +56,8 @@ const ModalView = styled.div`
 `;
 export type Props = {
   onClick: () => void;
-  todoId: number;
-  removeTodoHandler: (todoId: number) => void;
+  todoId: string;
+  removeTodoHandler: (todoId: string) => void;
 };
 const SureToRemoveModal: React.FC<Props> = ({ onClick, todoId, removeTodoHandler }) => {
   const submitFunction = (e: React.FormEvent) => {
